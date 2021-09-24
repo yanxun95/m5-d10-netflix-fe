@@ -14,18 +14,12 @@ class CommentArea extends Component {
       console.log(this.props.elementId);
       try {
         let response = await fetch(
-          "https://striveschool-api.herokuapp.com/api/comments/" +
-            this.props.elementId,
-          {
-            headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFjZjZiODJkNTI2MjAwMTViNmRjOTgiLCJpYXQiOjE2MjkyODgxMjAsImV4cCI6MTYzMDQ5NzcyMH0.XfRUnn6BFJPPRnEwvnQnjrk0oaXPSwwKyJlEGV6Wn9k",
-            },
-          }
+          process.env.REACT_APP_BE_URL + "/media/" + this.props.elementId
         );
         if (response.ok) {
           let data = await response.json();
-          this.setState({ comment: data });
+          this.setState({ comment: data.Reviews });
+          console.log(this.state.comment);
         } else {
           console.log("error");
         }
@@ -40,7 +34,10 @@ class CommentArea extends Component {
       <div className="container">
         <AddComment elementId={this.props.elementId}></AddComment>
         {this.state.comment.length > 0 && (
-          <CommentList comments={this.state.comment}></CommentList>
+          <CommentList
+            comments={this.state.comment}
+            elementId={this.props.elementId}
+          ></CommentList>
         )}
       </div>
     );

@@ -9,49 +9,61 @@ class Body extends Component {
     movies: [],
     searchMovie: "",
     comment: [],
-    movieTitle: [
-      "Harry Potter",
-      "Lord of the Rings",
-      "Pirates of the Caribbean",
-    ],
+    movieTitle: ["Lord of the Rings"],
     selectedMovie: null,
   };
 
-  getMovie = async (movie, search) => {
+  // getMovie = async (movie, search) => {
+  //   document.querySelector(".spinner-border").classList.remove("d-none");
+  //   try {
+  //     let response = await fetch(process.env.REACT_APP_BE_URL + "/media/");
+  //     if (response.ok) {
+  //       let data = await response.json();
+  //       console.log(data);
+  //       search
+  //         ? this.setState({ movies: [data.Search] })
+  //         : this.setState({ movies: [...this.state.movies, data.Search] });
+  //       document.querySelector(".spinner-border").classList.add("d-none");
+  //     } else {
+  //       console.log("error");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // searchMovie = (e) => {
+  //   if (e.target.value.length > 3) {
+  //     this.getMovie(e.target.value, true);
+  //   } else if (e.target.value.length === 0) {
+  //     this.setState({ movies: [] });
+  //     this.state.movieTitle.forEach(async (element) => {
+  //       await this.getMovie(element, false);
+  //     });
+  //   }
+  // };
+
+  // componentDidMount = async () => {
+  //   this.state.movieTitle.forEach(async (element) => {
+  //     await this.getMovie(element, false);
+  //   });
+  // };
+
+  componentDidMount = async () => {
     document.querySelector(".spinner-border").classList.remove("d-none");
     try {
-      let response = await fetch(
-        "http://www.omdbapi.com/?apikey=96b951ba&s=" + movie
-      );
+      let response = await fetch(process.env.REACT_APP_BE_URL + "/media/");
       if (response.ok) {
         let data = await response.json();
-        search
-          ? this.setState({ movies: [data.Search] })
-          : this.setState({ movies: [...this.state.movies, data.Search] });
+        this.setState({ movies: [data] });
+
         document.querySelector(".spinner-border").classList.add("d-none");
       } else {
         console.log("error");
       }
     } catch (error) {
-      console.log(error);
+      console.log("error");
     }
-  };
-
-  searchMovie = (e) => {
-    if (e.target.value.length > 3) {
-      this.getMovie(e.target.value, true);
-    } else if (e.target.value.length === 0) {
-      this.setState({ movies: [] });
-      this.state.movieTitle.forEach(async (element) => {
-        await this.getMovie(element, false);
-      });
-    }
-  };
-
-  componentDidMount = async () => {
-    this.state.movieTitle.forEach(async (element) => {
-      await this.getMovie(element, false);
-    });
   };
 
   render() {
@@ -73,7 +85,7 @@ class Body extends Component {
             this.state.movies.map((movie, i) => {
               return (
                 <MovieList
-                  key={this.state.movieTitle[i]}
+                  key={this.state.movies.imbdID}
                   movies={movie}
                   movieTitle={this.state.movieTitle[i]}
                   selectedMovie={this.state.selectedMovie}

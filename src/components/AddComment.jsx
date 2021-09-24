@@ -14,14 +14,15 @@ class AddComment extends Component {
     e.preventDefault();
     try {
       let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/comments",
+        process.env.REACT_APP_BE_URL +
+          "/media/" +
+          this.props.elementId +
+          "/reviews",
         {
           method: "POST",
           body: JSON.stringify(this.state.commentObj),
           headers: {
             "Content-type": "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTFjZjZiODJkNTI2MjAwMTViNmRjOTgiLCJpYXQiOjE2MjkyODgxMjAsImV4cCI6MTYzMDQ5NzcyMH0.XfRUnn6BFJPPRnEwvnQnjrk0oaXPSwwKyJlEGV6Wn9k",
           },
         }
       );
